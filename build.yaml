@@ -1,0 +1,58 @@
+# See https://github.com/dart-lang/build/blob/master/build_config/README.md#buildyaml-format
+
+targets:
+  $default:
+    builders:
+      injectable_generator:injectable_builder:
+        options:
+          # set to false if you want to use relative imports
+          auto_register: true
+          # set to true if you want to use relative imports
+          prefer_relative_imports: true
+      json_serializable:
+        options:
+          # Options configure how source code is generated for every
+          # `@JsonSerializable` class in the package.
+          #
+          # The default value for each is listed.
+          #
+          # For usage information, reference the documentation.
+          # https://pub.dev/packages/json_serializable
+          #
+          # any_map: false
+          # checked: false
+          # constructor: ""
+          # create_factory: true
+          # create_field_map: false
+          # create_json_keys: false
+          # create_per_field_to_json: false
+          # create_to_json: true
+          # disallow_unrecognized_keys: false
+          # explicit_to_json: false
+          # field_rename: none
+          # generic_argument_factories: false
+          # ignore_unannotated: false
+          # include_if_null: true
+      freezed:freezed:
+        options:
+          # Options configure how source code is generated for every
+          # `@freezed` class in the package.
+          #
+          # The default value for each is listed.
+          #
+          # For usage information, reference the documentation for build_config.
+          # https://pub.dev/packages/build_config
+          #
+          # copy_with: true
+          # create_factory: true
+          # equal: null # defaults to true
+          # final: true
+          # from_json: null # defaults to true if JsonSerializable is configured
+          # immutable: true
+          # map: null # defaults to true
+          # to_string: true
+          # union_key: "runtimeType"
+          # union_map_value_name: "map"
+          # union_when_value_name: "when"
+          # when: null # defaults to true
+

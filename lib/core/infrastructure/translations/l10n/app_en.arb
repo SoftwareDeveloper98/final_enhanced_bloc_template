@@ -1,0 +1,25 @@
+{
+  "@@locale": "en",
+  "appTitle": "Clean BLoC Template",
+  "homePageTitle": "Home Page",
+  "itemDetailsTitle": "Item Details",
+  "loadItemsButton": "Load Items",
+  "retryButton": "Retry",
+  "errorLoadingItems": "Error loading items: {errorMessage}",
+  "@errorLoadingItems": {
+    "description": "Error message shown when items fail to load",
+    "placeholders": {
+      "errorMessage": {
+        "type": "String",
+        "example": "Network error"
+      }
+    }
+  },
+  "settingsTitle": "Settings",
+  "themeSetting": "Theme",
+  "languageSetting": "Language",
+  "systemTheme": "System Default",
+  "lightTheme": "Light",
+  "darkTheme": "Dark"
+}
+

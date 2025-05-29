@@ -1,0 +1,6 @@
+arb-dir: lib/core/infrastructure/translations/l10n # Updated path
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false # Recommended for null safety
+

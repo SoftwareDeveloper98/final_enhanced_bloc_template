@@ -1,0 +1,43 @@
+# This file configures the Dart analyzer.
+#
+# The commented-out options below are some of the most common ones.
+# See https://dart.dev/guides/language/analysis-options for more information.
+
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  # The lint rules applied to this project can be customized in the
+  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
+  # included above or to enable additional rules. A list of all available lints
+  # and their documentation is published at https://dart.dev/lints.
+  #
+  # Instead of disabling a lint rule for the entire project in the
+  # section below, it can also be suppressed for a single line of code
+  # or a specific dart file by using the `// ignore: name_of_lint` and
+  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
+  # producing the lint.
+  rules:
+    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    # Additional rules (example)
+    always_declare_return_types: true
+    avoid_print: true # Recommend using a dedicated logger instead
+    prefer_final_locals: true
+    prefer_relative_imports: true
+    # Add more rules as needed for stricter analysis
+    # See https://dart.dev/lints for a full list
+
+# analyzer:
+#   exclude:
+#     - path/to/excluded/files/**
+
+#   errors:
+#     # treat specific lint rules as warnings or errors
+#     # name_of_lint_rule: warning
+
+#   # Strong mode controls the types of errors produced by the analyzer.
+#   # The default is `implicit-casts: true` and `implicit-dynamic: true`.
+#   # See https://dart.dev/guides/language/analysis-options#strong-mode.
+#   strong-mode:
+#     implicit-casts: false
+#     implicit-dynamic: false
+
