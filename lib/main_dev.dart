@@ -1,7 +1,6 @@
+import 'core/di/service_locator.dart';
 import 'main_common.dart';
 
-void main() {
-  // Run the app in development environment
-  mainCommon(AppEnvironment.dev);
+Future<void> main() async {
+  await mainCommon(Env.dev);
 }
-
