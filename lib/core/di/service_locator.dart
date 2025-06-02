@@ -1,17 +1,14 @@
 import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
-import 'service_locator.config.dart'; // Will be generated
 
-final getIt = GetIt.instance;
-
-@injectableInit
-Future<void> configureDependencies({String? environment}) async {
-  await $initGetIt(getIt, environment: environment);
-}
-
-// Define environment constants
-abstract class Env {
-  static const String dev = 'dev';
-  static const String prod = 'prod';
-  static const String staging = 'staging';
-}
+/// Global Service Locator instance.
+///
+/// This exports the `GetIt.instance` for convenient access throughout the app.
+/// It's generally recommended to pass dependencies via constructors where possible,
+/// but a service locator can be useful for accessing services in places where
+/// constructor injection is difficult or for utility services.
+///
+/// Example usage:
+/// ```
+/// final networkService = sl<NetworkService>();
+/// ```
+final GetIt sl = GetIt.instance;

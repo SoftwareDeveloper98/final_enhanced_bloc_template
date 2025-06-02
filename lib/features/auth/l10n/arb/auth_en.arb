@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "auth_loginButton": "Login",
+  "auth_logoutButton": "Logout",
+  "auth_emailHint": "Email Address",
+  "auth_passwordHint": "Password",
+  "auth_loginFailedError": "Login failed. Please check your credentials.",
+  "auth_registrationPageTitle": "Create Account",
+  "auth_registerButton": "Register"
+}

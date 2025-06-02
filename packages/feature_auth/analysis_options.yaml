@@ -1,0 +1,18 @@
+# This file extends the root analysis_options.yaml.
+
+include: ../../analysis_options.yaml # Path to the root analysis_options.yaml
+
+# You can override or add specific linter rules or analyzer settings
+# for this `feature_auth` package if needed.
+
+# analyzer:
+#   exclude:
+#     - "lib/src/generated_by_some_other_tool/**" # If this feature uses unique codegen
+
+# linter:
+#   rules:
+#     # Example: If this feature heavily uses a pattern that conflicts with a global lint
+#     # await_only_futures: false # (Use with caution and strong justification)
+
+# Keeping this file minimal means the feature package adheres closely to the
+# project-wide linting and analysis standards defined in the root file.

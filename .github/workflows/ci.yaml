@@ -1,0 +1,104 @@
+# TODO: Review and adjust Flutter version, testing matrix (OS, API levels for integration tests), and secrets.
+name: Flutter CI
+
+on:
+  push:
+    branches: [ main, develop ] # Adjust to your branches
+  pull_request:
+    branches: [ main, develop ] # Adjust to your branches
+
+jobs:
+  test:
+    name: Test Flutter App
+    runs-on: ubuntu-latest # Or macos-latest for iOS specific tests if needed
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2 # Or dart-lang/setup-dart@v1 then flutter upgrade
+        with:
+          flutter-version: '3.19.0' # TODO: Specify your project's Flutter version
+          channel: 'stable'
+          cache: true # Enable caching for Flutter dependencies
+
+      # If you have local packages like core_test_utils, they should be resolved automatically
+      # by the flutter pub get command run in the main application directory.
+      # Ensure path dependencies in pubspec.yaml are correct (e.g., path: ../core_test_utils for a package in a subfolder).
+      # If core_test_utils was in a sibling directory `packages/`, the main app's pubspec.yaml would have:
+      # core_test_utils:
+      #   path: ../packages/core_test_utils/
+
+      - name: Get Flutter dependencies for main app
+        run: flutter pub get
+        # working-directory: my_app # if your flutter app is in a subdirectory of the repo root
+
+      # If your core_test_utils or other local packages have their own pubspec.yaml
+      # and need specific `pub get` before the main app, you might need:
+      # - name: Get dependencies for core_test_utils
+      #   run: flutter pub get
+      #   working-directory: packages/core_test_utils # Adjust path as needed
+
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed .
+        # working-directory: my_app
+
+      - name: Analyze project
+        run: flutter analyze
+        # working-directory: my_app
+
+      - name: Run unit and widget tests
+        run: flutter test
+        # working-directory: my_app
+
+  # Integration tests (Optional, but highly recommended)
+  # These might need a device/emulator, so setup can be more complex.
+  # Example for Android:
+  integration_test_android:
+    name: Integration Tests (Android)
+    needs: test # Run after unit/widget tests
+    runs-on: macos-latest # Android emulators often run better on macOS in GHA
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0' # TODO: Specify your project's Flutter version
+          channel: 'stable'
+          cache: true
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+        # working-directory: my_app
+
+      - name: Run Android integration tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30 # TODO: Adjust API level as needed
+          target: default # Or a system image like 'google_apis'
+          arch: x86_64 # Or arm64-v8a if available and needed
+          # working-directory: my_app # if your flutter app is in a subdirectory
+          script: flutter test integration_test # Command to run tests
+          # Optional: Add --flavor if you use flavors: flutter test integration_test --flavor staging
+
+  # Add similar job for iOS integration tests if needed, using a macOS runner and Xcode setup.
+  # integration_test_ios:
+  // ...
+  // ...
+
+# TODO:
+# - Consider adding build steps (e.g., flutter build apk, flutter build ios --no-codesign)
+#   to ensure the app compiles for release modes.
+# - If you use code signing for integration tests or builds, manage secrets via GitHub secrets.
+# - Expand the matrix for different OS versions or Flutter versions if necessary.
+# - If your `core_test_utils` or other local packages are in a different directory structure
+#   than assumed (e.g. not `packages/core_test_utils` directly under a common root with `my_app`),
+#   adjust `working-directory` for `flutter pub get` in `core_test_utils` if needed,
+#   and verify path dependencies in `my_app/pubspec.yaml`.
+#   The example assumes `my_app` is at the root or `working-directory` is set.
+#   If `my_app` is at the root, and `core_test_utils` is in `packages/core_test_utils`,
+#   the main `flutter pub get` should resolve it.

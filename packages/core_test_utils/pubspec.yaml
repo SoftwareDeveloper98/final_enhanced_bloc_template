@@ -1,0 +1,21 @@
+name: core_test_utils
+description: Shared utilities for testing in the Flutter project.
+publish_to: 'none' # Prevent accidental publishing
+
+environment:
+  sdk: '>=3.0.0 <4.0.0' # Adjust to your project's SDK constraint
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Add my_app as a path dependency to access UserProfile etc.
+  # This assumes 'my_app' is the name in your main pubspec.yaml
+  # The path should be relative to THIS pubspec.yaml file (packages/core_test_utils/pubspec.yaml)
+  my_app:
+    path: ../../
+  mocktail: ^1.0.0 # Or your preferred version e.g. ^1.0.3
+  # flutter_bloc: ^8.1.3 # Uncomment and adjust version if using Bloc and needed for test helpers
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

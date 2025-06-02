@@ -1,0 +1,8 @@
+{
+  "@@locale": "en",
+  "shared_ok": "OK",
+  "shared_cancel": "Cancel",
+  "shared_error_generic": "An unexpected error occurred. Please try again.",
+  "shared_loading": "Loading...",
+  "shared_retry": "Retry"
+}

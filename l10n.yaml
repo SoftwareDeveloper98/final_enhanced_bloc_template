@@ -1,6 +1,78 @@
-arb-dir: lib/core/infrastructure/translations/l10n # Updated path
-template-arb-file: app_en.arb
-output-localization-file: app_localizations.dart
-output-class: AppLocalizations
-nullable-getter: false # Recommended for null safety
+# This file configures the Flutter l10n code generation tool.
 
+# Indicates that ARB files representing the source of truth for localizations
+# are stored primarily in the lib/l10n/arb directory.
+# This typically contains shared/global translations.
+arb-dir: lib/l10n/arb
+
+# The template ARB file that will be used as the basis for generating localization files.
+# This file should contain all keys for shared/global strings.
+template-arb-file: app_en.arb
+
+# The output Dart file that will contain the generated localizations class.
+# This file will be placed in lib/l10n/ by default, or as specified by output-dir.
+output-localization-file: app_localizations.dart
+
+# Optional: Specify the class name for the generated localizations.
+# If not specified, it defaults to `AppLocalizations`.
+# output-class: AppLocalizations
+
+# Optional: Specify the output directory for the generated Dart files.
+# Defaults to lib/l10n if not specified.
+# output-dir: lib/generated/l10n
+
+# Optional: Specify whether to use deferred loading for localizations.
+# Deferred loading can reduce initial app startup time by loading translations on demand.
+# deferred-loading: false
+
+# Optional: Specify whether to generate a nullable getter for messages that are not
+# found in the template ARB file. If false (default), it throws an exception.
+# nullable-getter: true # Set to true if you want to handle missing keys gracefully at runtime
+
+# Optional: Header for generated Dart files.
+# header: "/// Copyright 2023 My App. All rights reserved."
+
+# Optional: Whether to use synthetic package. Set to false if your sources are in a package
+# other than the main application package (e.g. a specific "localization" package).
+# synthetic-package: true
+
+
+# --- Feature-Specific Localizations ---
+# The standard `flutter gen-l10n` tool, configured by this file, primarily targets
+# a single set of ARB files (those in `arb-dir`). It generates one `AppLocalizations` class.
+#
+# For feature-specific ARB files located within each feature's directory (e.g., lib/features/auth/l10n/arb/),
+# there are several strategies to integrate them:
+#
+# 1. Scripting/Merging:
+#    A custom script (e.g., Dart, Python) can be run before `flutter gen-l10n`.
+#    This script would:
+#      a. Collect all `*_en.arb` files (the template language) from feature directories.
+#      b. Merge them into the main `lib/l10n/arb/app_en.arb` (or a temporary combined template).
+#         Care must be taken with key collisions; a prefixing strategy (e.g., `auth_loginButton`) is essential.
+#      c. (Optional) Similarly merge translated ARB files (e.g., all `*_es.arb` into `app_es.arb`).
+#    Then, `flutter gen-l10n` runs using the merged ARB files.
+#
+# 2. Multiple Localization Delegates:
+#    Each feature (or a group of features) could be treated as having its own set of localizations.
+#    This would involve:
+#      a. Running `flutter gen-l10n` multiple times with different configurations (or in different
+#         sub-packages if features are structured as separate Flutter packages).
+#      b. Generating multiple localization classes (e.g., `AuthLocalizations`, `HomeLocalizations`).
+#      c. Adding multiple localization delegates to `MaterialApp.localizationsDelegates`.
+#    This approach offers better isolation but requires managing multiple delegates and potentially
+#    more complex lookup of strings if they need to be accessed across features.
+#
+# 3. Third-Party Packages:
+#    Some packages in the Flutter ecosystem offer more advanced localization management that might
+#    natively support modular structures or easier merging.
+#
+# TODO: Devise a strategy (e.g., custom script for merging, explore multiple delegates, or investigate third-party packages)
+# to fully integrate feature-specific ARB files (like those in lib/features/auth/l10n/arb/ and lib/features/home/l10n/arb/)
+# into the localization build process. The current `l10n.yaml` primarily sets up `flutter gen-l10n` for
+# the shared ARB files in `lib/l10n/arb/`.
+#
+# For now, this `l10n.yaml` serves the shared strings. Feature-specific strings would need one of the above
+# strategies to be usable via the generated `AppLocalizations` class or their own classes.
+# A common practice is to use a script to merge all ARB files into the `arb-dir` before running `flutter gen-l10n`.
+# This script would handle prefixing to avoid key collisions (e.g., auth_loginButton, home_welcomeMessage).

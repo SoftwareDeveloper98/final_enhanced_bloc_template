@@ -1,0 +1,112 @@
+```mermaid
+graph TD
+    subgraph "App Shell (Main Flutter App)"
+        A_UI[Flutter UI Widgets]
+        A_Nav[Routing / Navigation]
+        A_DI[Dependency Injection Setup]
+        A_Main[main_env.dart / main_common.dart]
+    end
+
+    subgraph "Local Packages (Managed by Melos)"
+        P_CoreUI[Core UI Package <br> (packages/core_ui)]
+        P_CoreUtils[Core Utilities Package <br> (packages/core_utils - example)]
+        P_CoreServices[Core Services Package <br> (networking, storage, etc. - example)]
+
+        subgraph "Feature Packages"
+            direction LR
+            Feat_Auth[Auth Feature <br> (packages/feature_auth)]
+            Feat_Home[Home Feature <br> (packages/feature_home - example)]
+            Feat_Profile[Profile Feature <br> (packages/feature_profile - example)]
+            Feat_More[...]
+        end
+    end
+
+    subgraph "Shared Concepts (Applied within App Shell & Packages)"
+        S_Arch["Clean Architecture Layers <br> (Presentation, Domain, Data)"]
+        S_State[State Management <br> (e.g., BLoC/Cubit)]
+        S_Obs[Observability <br> (Logging, Analytics, Tracing)]
+        S_Sec[Security <br> (Secure Storage, SSL Pinning)]
+        S_L10n[Localization]
+    end
+
+    subgraph "External Dependencies / Services"
+        Ext_Backend[Backend APIs <br> (REST, GraphQL, gRPC)]
+        Ext_Firebase[Firebase Services <br> (Auth, Firestore, Analytics - optional)]
+        Ext_Sentry[Sentry / Crashlytics <br> (Error Reporting)]
+        Ext_OtherSDKs[Other 3rd Party SDKs]
+    end
+
+    %% Connections from App Shell
+    A_Main --> A_DI
+    A_DI --> P_CoreServices
+    A_DI --> S_Obs
+    A_DI --> S_Sec
+    A_Main --> A_Nav
+    A_Nav --> Feat_Auth
+    A_Nav --> Feat_Home
+    A_Nav --> Feat_Profile
+    A_UI --> S_State
+    A_UI --- P_CoreUI
+
+    %% Connections for Feature Packages
+    Feat_Auth --> P_CoreUI
+    Feat_Auth --> P_CoreServices
+    Feat_Auth -.-> S_Arch
+    Feat_Auth -.-> S_State
+    Feat_Auth --> Ext_Backend
+    Feat_Auth --> Ext_Firebase
+
+
+    Feat_Home --> P_CoreUI
+    Feat_Home --> P_CoreServices
+    Feat_Home -.-> S_Arch
+    Feat_Home -.-> S_State
+    Feat_Home --> Ext_Backend
+
+    %% Connections for Core Packages
+    P_CoreServices --> Ext_Backend
+    P_CoreServices --> S_Obs
+    P_CoreServices --> S_Sec
+
+    %% General Dependencies
+    S_Arch --> S_State
+    S_State --> A_UI
+    S_Obs --> Ext_Sentry
+    S_Obs --> Ext_Firebase
+    S_L10n --> A_UI
+
+
+    classDef default fill:#ECECFF,stroke:#999,stroke-width:2px,color:#333;
+    classDef subgraphStyle fill:#F5F5F5,stroke:#AAA,stroke-width:2px,color:#333,rx:5,ry:5;
+    classDef featureStyle fill:#E0F2F7,stroke:#00ACC1,stroke-width:2px,color:#00796B;
+    classDef coreStyle fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px,color:#795548;
+    classDef externalStyle fill:#FFCCBC,stroke:#FF5722,stroke-width:2px,color:#BF360C;
+    classDef conceptsStyle fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px,color:#1B5E20;
+
+
+    class A_UI,A_Nav,A_DI,A_Main subgraphStyle;
+    class P_CoreUI,P_CoreUtils,P_CoreServices coreStyle;
+    class Feat_Auth,Feat_Home,Feat_Profile,Feat_More featureStyle;
+    class S_Arch,S_State,S_Obs,S_Sec,S_L10n conceptsStyle;
+    class Ext_Backend,Ext_Firebase,Ext_Sentry,Ext_OtherSDKs externalStyle;
+```
+
+**Explanation of Diagram:**
+
+*   **App Shell:** The main Flutter application that hosts everything. It handles root-level concerns like initial DI setup, top-level navigation, and incorporates UI elements from shared UI packages or feature packages.
+*   **Local Packages (Melos):**
+    *   **Core Packages:** Provide shared functionalities like UI components (`core_ui`), utilities (`core_utils`), or services (`core_services` for networking, storage).
+    *   **Feature Packages:** Encapsulate specific application features (e.g., Authentication, Home screen, User Profile). These depend on core packages and the app shell integrates them.
+*   **Shared Concepts:** These are patterns and cross-cutting concerns applied across the app shell and various packages.
+    *   **Clean Architecture Layers:** Presentation, Domain, Data layers are implemented within features and core services where applicable.
+    *   **State Management:** The chosen solution (e.g., BLoC) is used primarily in the presentation layer of features.
+    *   **Observability & Security:** These are core concerns integrated into relevant services and UI.
+    *   **Localization:** Applied throughout the UI.
+*   **External Dependencies / Services:** Third-party services the application interacts with.
+
+**Arrows indicate dependencies or interactions:**
+*   Solid arrows (`-->`) typically show direct dependencies or primary data/control flow.
+*   Dashed arrows (`-.->`) might indicate conceptual application or influence (e.g., a feature package *applies* Clean Architecture principles).
+
+This diagram provides a high-level overview. More detailed diagrams for specific features or interactions can be created as needed.
+To view or edit this diagram, you can use online Mermaid editors like [mermaid.live](https://mermaid.live/) or integrated previews in IDEs like VS Code with Mermaid extensions.

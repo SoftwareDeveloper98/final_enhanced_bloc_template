@@ -1,0 +1,23 @@
+# This file extends the root analysis_options.yaml.
+
+include: ../../analysis_options.yaml # Path to the root analysis_options.yaml
+
+# You can override or add specific linter rules or analyzer settings
+# for this `core_ui` package if needed.
+# For example, if this package has very specific coding standards or
+# needs to ignore a lint that's globally enabled but problematic here.
+
+# analyzer:
+#   errors:
+#     # Example: Make a specific lint a warning only for this package
+#     # avoid_print: warning
+
+# linter:
+#   rules:
+#     # Example: Disable a rule for this package
+#     # public_member_api_docs: false
+#     # Example: Enable a rule just for this package
+#     # always_specify_types: true
+
+# Generally, it's best to keep package-specific deviations minimal
+# and adhere to the global analysis options for consistency.
