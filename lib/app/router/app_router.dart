@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 // Import other feature pages/routes here
 // import '../../features/settings/presentation/pages/settings_page.dart'; 
-// import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/login_page.dart';
 
-// TODO: Implement Authentication Service/State
+// TODO: CRITICAL - Replace with a real Authentication BLoC/Service.
+// The current AuthService is a mock for routing demonstration purposes only.
+// Authentication logic needs to be implemented in the 'auth' feature.
 class AuthService {
   bool isLoggedIn = false; // Mock auth state
 }
@@ -46,10 +48,10 @@ class AppRouter {
       //   builder: (context, state) => const SettingsPage(),
       // ),
       // Example: Login Route
-      // GoRoute(
-      //   path: AppRoutes.login,
-      //   builder: (context, state) => const LoginPage(),
-      // ),
+      GoRoute(
+        path: AppRoutes.login,
+        builder: (context, state) => const LoginPage(),
+      ),
 
       // --- Feature Route Aggregation Example ---
       // Uncomment and implement feature-specific route definitions

@@ -4,9 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../app/di/injector.dart';
 import '../../app/router/app_router.dart';
-import '../../core/theme/app_theme.dart';
-import '../../core/theme/theme_cubit.dart';
-import '../../core/translations/l10n/app_localizations.dart';
+import 'package:clean_bloc_template/core/infrastructure/theme/app_theme.dart';
+import 'package:clean_bloc_template/core/infrastructure/theme/theme_cubit.dart';
+import 'package:clean_bloc_template/core/translations/l10n/app_localizations.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

@@ -19,7 +19,7 @@ output-localization-file: app_localizations.dart
 
 # Optional: Specify the output directory for the generated Dart files.
 # Defaults to lib/l10n if not specified.
-# output-dir: lib/generated/l10n
+output-dir: lib/core/translations/l10n
 
 # Optional: Specify whether to use deferred loading for localizations.
 # Deferred loading can reduce initial app startup time by loading translations on demand.
