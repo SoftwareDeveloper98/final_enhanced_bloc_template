@@ -1,0 +1,8 @@
+{
+  "@@locale": "en",
+  "home_welcomeMessage": "Welcome to the Home Page, {userName}!",
+  "home_sectionTitle_featured": "Featured Items",
+  "home_sectionTitle_myStuff": "Your Items",
+  "home_emptyDashboard": "Your dashboard is empty. Explore items to get started.",
+  "home_itemLoadError": "Could not load items. Please try again."
+}

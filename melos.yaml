@@ -1,0 +1,90 @@
+name: my_flutter_enterprise_app # Name of your overall project
+repository: https://github.com/your_org/my_flutter_enterprise_app # Optional: Your project's repository URL
+
+# Defines where Melos should look for packages.
+# This includes all subdirectories under `packages/` and the root directory itself (for the app shell).
+packages:
+  - packages/**
+  - . # Represents the root package (your main Flutter application)
+
+# Configuration for specific Melos commands.
+command:
+  bootstrap:
+    # When `melos bootstrap` is run (or implicitly by other commands):
+    # - Runs `flutter pub get` in all packages.
+    # - Links local packages (dependencies using `path:`).
+    # `usePubspecOverrides: true` creates a `pubspec_overrides.yaml` file in each package
+    # that depends on another local package. This makes Dart analysis and IDEs correctly
+    # resolve these local path dependencies.
+    usePubspecOverrides: true
+
+# Custom scripts callable with `melos run <script_name>` or `melos <script_name>`.
+scripts:
+  # Fetches dependencies for all packages.
+  # Melos bootstrap implicitly does this, but a dedicated script can be useful.
+  get:
+    run: melos bootstrap # `melos bootstrap` is the standard way to get/link dependencies
+    description: Bootstrap all packages and link local dependencies.
+
+  # Example: an alias for bootstrap if preferred
+  # get_all:
+  #   run: melos bootstrap
+  #   description: Run `flutter pub get` in all packages and link dependencies.
+
+  analyze_all:
+    # Runs `flutter analyze` in all packages concurrently.
+    # `melos exec` executes a given command in each package.
+    # The `--` separates Melos options from the command to be executed.
+    run: melos exec --concurrency=5 -- "flutter analyze"
+    description: Run `flutter analyze` in all packages.
+
+  test_all:
+    # Runs `flutter test` in all packages.
+    # You can add `--no-pub` if dependencies are already fetched.
+    # Use `--scope` or `--ignore` to run tests only for specific packages.
+    run: melos exec --concurrency=5 -- "flutter test" # Add --coverage to generate coverage reports
+    description: Run `flutter test` in all packages.
+
+  clean_all:
+    run: melos exec -- "flutter clean"
+    description: Run `flutter clean` in all packages.
+
+  format_check:
+    run: melos exec -- "dart format --output=none --set-exit-if-changed ."
+    description: Check Dart formatting in all packages.
+
+  format_apply:
+    run: melos exec -- "dart format --output=write ."
+    description: Apply Dart formatting to all packages.
+
+  build_runner_all:
+    # Example for running build_runner in packages that need it.
+    # You might scope this to specific packages using flags like:
+    # `melos exec --scope="*_with_codegen" -- "flutter pub run build_runner build --delete-conflicting-outputs"`
+    # This requires you to define a scope or manually list packages.
+    # For a simpler start, run in all, and packages without build_runner will just skip.
+    run: melos exec -- "flutter pub run build_runner build --delete-conflicting-outputs"
+    description: Run build_runner in all packages that have it as a dependency.
+
+  # Example of a script that chains other scripts
+  # ci_check:
+  #   run: |
+  #     melos run format_check
+  #     melos run analyze_all
+  #     melos run test_all
+  #   description: Run all CI checks (format, analyze, test).
+
+# Optional: IDE-specific configurations
+ide:
+  intellij: true # Generates IntelliJ project configuration for better monorepo support.
+
+# Optional: Lifecycle hooks for commands like `melos version` or `melos publish`.
+# lifecycle:
+#   version:
+#     # Example: Automatically update version numbers in code before tagging.
+#     before: melos run update_versions_in_code # Assuming you have such a script
+#   publish:
+#     # Example: Run tests before publishing any package.
+#     before: melos run test_all --scope="--no-private" # Test only publishable packages
+#
+# For more advanced configurations, see the Melos documentation: https://melos.invertase.dev

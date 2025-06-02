@@ -18,6 +18,11 @@ class AppTheme {
         )
       ),
       // Add more theme properties
+      extensions: const <ThemeExtension<dynamic>>[
+        // Example:
+        // ProfileThemeExtension.light,
+        // OtherFeatureThemeExtension.light,
+      ],
     );
   }
 
@@ -38,6 +43,11 @@ class AppTheme {
         )
       ),
       // Add more theme properties
+      extensions: const <ThemeExtension<dynamic>>[
+        // Example:
+        // ProfileThemeExtension.dark,
+        // OtherFeatureThemeExtension.dark,
+      ],
     );
   }
 }

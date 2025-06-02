@@ -23,9 +23,34 @@ class DioNetworkService implements NetworkService {
   // final String _apiKey = const String.fromEnvironment('API_KEY'); // Example
 
   DioNetworkService(this._secureStorage) : _dio = Dio() {
+    // --- SSL Pinning Setup ---
+    // Call this method after Dio instance creation and before adding other interceptors
+    // or making requests. This is a conceptual placement. Actual SSL pinning setup
+    // might need to happen even before Dio() instantiation if the adapter requires it
+    // during its own construction.
+    //
+    // Example:
+    // SslPinningDioAdapter.configureAdapter(_dio, allowedSha256Fingerprints: [
+    //   "YOUR_PRIMARY_CERT_SHA256_FINGERPRINT",
+    //   "YOUR_BACKUP_CERT_SHA256_FINGERPRINT",
+    // ]).catchError((e,s) {
+    //   _logger.error("Failed to configure SSL Pinning", e, s);
+    //   // Decide how to handle this error - fail open (less secure) or fail closed (more secure)?
+    //   // For critical apps, you might want to prevent network requests if pinning setup fails.
+    // });
+    // Note: The above call is async. If Dio is used immediately, ensure this completes.
+    // It might be better to make the DioNetworkService constructor async or use an async factory.
+
     _dio.options.baseUrl = _baseUrl;
     _dio.options.connectTimeout = const Duration(seconds: 15);
     _dio.options.receiveTimeout = const Duration(seconds: 15);
+
+    // Add HttpTracingInterceptor for distributed tracing
+    // This assumes TraceContextService is registered in GetIt (sl)
+    // Make sure to import HttpTracingInterceptor and sl (service_locator)
+    // Example:
+    // final traceService = sl<TraceContextService>(); // Get from GetIt/DI
+    // _dio.interceptors.add(DioHttpTracingInterceptor(traceService: traceService)); // Use the Dio specific one
 
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
