@@ -42,6 +42,10 @@ dependencies:
   # UI
   cupertino_icons: ^1.0.6
 
+  # Local Packages
+  core_ui:
+    path: packages/core_ui
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

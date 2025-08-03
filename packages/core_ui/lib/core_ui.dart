@@ -1,5 +1,7 @@
+/// This file serves as the public API for the core_ui package.
+/// Export any widgets, themes, or utilities that should be accessible to other packages.
+
 export 'src/widgets/custom_app_bar.dart';
-// Add other exports for widgets, theming, utils etc. from core_ui
-// Example:
-// export 'src/theme/core_theme.dart';
-// export 'src/utils/layout_helpers.dart';
+export 'src/widgets/primary_button.dart';
+export 'src/widgets/custom_text_field.dart';
+export 'src/widgets/loading_indicator.dart';
