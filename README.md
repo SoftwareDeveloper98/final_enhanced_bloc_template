@@ -146,7 +146,7 @@ A more detailed guide is planned: `docs/folder_structure_guide.md` (TODO).
 ## State Management
 
 This project uses BLoC/Cubit for managing application state.
-More details can be found in `docs/state_management_guide.md` (TODO).
+More details can be found in `docs/state_management_guide.md`.
 
 ## Routing
 

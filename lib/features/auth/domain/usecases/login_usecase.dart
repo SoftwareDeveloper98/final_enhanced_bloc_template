@@ -1,17 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart'; // For LoginParams
+import 'package:injectable/injectable.dart';
 import 'package:my_app/core/common/error/failures.dart';
 import 'package:my_app/core/common/usecases/usecase.dart';
-import 'package:my_app/features/auth/domain/entities/user_profile.dart';
+import 'package:my_app/features/auth/domain/entities/user_entity.dart';
 import 'package:my_app/features/auth/domain/repositories/auth_repository.dart';
 
-class LoginUseCase implements UseCase<UserProfile, LoginParams> {
+@injectable
+class LoginUseCase implements UseCase<UserEntity, LoginParams> {
   final AuthRepository repository;
 
   LoginUseCase(this.repository);
 
   @override
-  Future<Either<Failure, UserProfile>> call(LoginParams params) async {
+  Future<Either<Failure, UserEntity>> call(LoginParams params) async {
     // Here you could add validation for params.email and params.password if needed,
     // or this can be handled at the UI/Presentation layer.
     // For example:
@@ -21,7 +23,7 @@ class LoginUseCase implements UseCase<UserProfile, LoginParams> {
     // if (params.password.length < 6) {
     //   return Left(ValidationFailure(message: 'Password too short'));
     // }
-    return await repository.login(params.email, params.password);
+    return await repository.login(email: params.email, password: params.password);
   }
 }
 

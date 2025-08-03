@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:core_ui/core_ui.dart'; // Import the shared UI package
 import '../bloc/auth_bloc.dart';
-import '../../../../shared/widgets/custom_button.dart'; // Example shared widget
-import '../../../../shared/utils/validator_utils.dart'; // Example shared util
+import '../../../../shared/utils/validator_utils.dart'; // Keep validator for now
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -43,26 +43,28 @@ class _LoginFormState extends State<LoginForm> {
           children: <Widget>[
             Text('Login', style: Theme.of(context).textTheme.headlineMedium),
             const SizedBox(height: 24),
-            TextFormField(
+            CustomTextField(
               controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
+              labelText: 'Email',
               keyboardType: TextInputType.emailAddress,
               validator: ValidatorUtils.email,
+              prefixIcon: Icons.email,
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            CustomTextField(
               controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password', border: OutlineInputBorder()),
+              labelText: 'Password',
               obscureText: true,
               validator: ValidatorUtils.password,
+              prefixIcon: Icons.lock,
             ),
             const SizedBox(height: 24),
             BlocBuilder<AuthBloc, AuthState>( // Rebuild button on AuthLoading state
               builder: (context, state) {
-                final isLoading = state is AuthLoading && (state.message?.contains('login') ?? false);
-                return CustomButton(
+                final isLoading = state is AuthLoading;
+                return PrimaryButton(
                   text: 'Login',
-                  onPressed: _submitLogin,
+                  onPressed: isLoading ? null : _submitLogin,
                   isLoading: isLoading,
                 );
               },
