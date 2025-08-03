@@ -1,4 +1,4 @@
-name: my_flutter_enterprise_app # Name of your overall project
+name: clean_bloc_template # Name of your overall project
 repository: https://github.com/your_org/my_flutter_enterprise_app # Optional: Your project's repository URL
 
 # Defines where Melos should look for packages.
@@ -65,6 +65,10 @@ scripts:
     # For a simpler start, run in all, and packages without build_runner will just skip.
     run: melos exec -- "flutter pub run build_runner build --delete-conflicting-outputs"
     description: Run build_runner in all packages that have it as a dependency.
+
+  review:
+    run: ~/flutter/bin/dart run packages/ai_enhancer/bin/enhancer.dart review
+    description: Run the AI enhancer tool to review the codebase.
 
   # Example of a script that chains other scripts
   # ci_check:

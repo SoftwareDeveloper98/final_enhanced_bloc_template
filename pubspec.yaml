@@ -18,7 +18,7 @@ dependencies:
   equatable: ^2.0.5
   get_it: ^7.7.0
   injectable: ^2.5.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   logger: ^2.3.0
   json_annotation: ^4.9.0
   meta: ^1.12.0
@@ -45,6 +45,8 @@ dependencies:
   # Local Packages
   core_ui:
     path: packages/core_ui
+  ai_enhancer:
+    path: packages/ai_enhancer
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +64,8 @@ dev_dependencies:
 
   # Linting
   flutter_lints: ^3.0.0
+
+  melos: 3.1.1
 
 flutter:
   uses-material-design: true
